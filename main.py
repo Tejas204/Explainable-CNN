@@ -8,4 +8,4 @@ import torchvision
 import torchvision.transforms as transforms
 from config.config import batch_size
 
-print(batch_size)
+
