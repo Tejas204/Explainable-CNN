@@ -16,15 +16,34 @@ test_dataset = torchvision.datasets.CIFAR10(root="/Users/tejasdhopavkar/Document
 
 class LoadData(Dataset):
     def __init__(self, data, labels, transform=transform):
+        """
+        Docstring for __init__
+        
+        :param self
+        :param data: contains the train or test data
+        :param labels: contains the labels of corresponding data
+        :param transform: convert to Tensor and normalize
+        """
         super(LoadData, self).__init__()
         self.transform = transform
         self.data = data
         self.labels = labels
     
     def __len__(self):
+        """
+        Docstring for __len__
+        
+        :param self
+        """
         return len(self.labels)
     
     def __getitem__(self, index):
+        """
+        Docstring for __getitem__
+        
+        :param self: Description
+        :param index: Description
+        """
         sample = self.data[index]
         label = self.labels[index]
         if self.transform:
