@@ -10,15 +10,30 @@ from torch.utils.data import Dataset, DataLoader
 
 
 class LoadData(Dataset):
+    """
+    A class used to load data
+
+    ----------------------------------------------------------------
+    Attributes
+    ----------------------------------------------------------------
+
+    transform: object
+        The transform you want to apply to your dataset
+
+    ----------------------------------------------------------------
+    Methods
+    ----------------------------------------------------------------
+
+    __len__
+        Returns the length of the dataset
+
+    __getitem__
+        Fetches a specific item of the dataset at given index
+
+    load_data
+        Loads data available with torchvision
+    """
     def __init__(self, transform):
-        """
-        Docstring for __init__
-        
-        :param self
-        :param data: contains the train or test data
-        :param labels: contains the labels of corresponding data
-        :param transform: convert to Tensor and normalize
-        """
         super(LoadData, self).__init__()
         self.transform = transform
     
@@ -43,6 +58,7 @@ class LoadData(Dataset):
             sample = self.transform(sample)
         return sample, label
     
+
     def load_data(self, dataset:str):
         """
         Docstring for load_data
