@@ -6,10 +6,18 @@ import torch.nn.functional as F
 
 
 class ExplainableCNN(nn.Module):
-    def __init__(self, input_size, output_size, pooling, filter):
+    def __init__(self, input_size: int, output_size: int, num_classes: int, activation, normalization: bool, drop_prob = 0.0):
         super(ExplainableCNN, self).__init__()
+        self.input_size = input_size
+        self.output_size = output_size
+        self.num_classes = num_classes
+        self.activation = activation
+        self.norm = normalization
+        self.drop_prob = drop_prob
 
-    def forward():
+    def normalization():
         pass
 
-    
+    def build_model():
+        pass
+
