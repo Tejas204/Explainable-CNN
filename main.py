@@ -17,3 +17,12 @@ transform = transforms.Compose([transforms.ToTensor(), transforms.Normalize((0.5
 data = LoadData(transform=transform)
 training_data, testing_data = data.load_data("CIFAR10")
 
+# Data Loaders
+train_loader = data.data_loaders(training_data, "train")
+test_loader = data.data_loaders(testing_data, "test")
+
+# Example visualization
+examples = iter(train_loader)
+samples, labels = next(examples)
+print(samples.shape, labels.shape)
+

@@ -5,7 +5,7 @@ import torch.nn.functional as F
 import torchvision
 import torchvision.transforms as transforms
 from torch.utils.data import Dataset, DataLoader
-
+from config.config import batch_size
 
 
 
@@ -75,5 +75,13 @@ class LoadData(Dataset):
             testing_data = torchvision.datasets.CIFAR100(root="/Users/tejasdhopavkar/Documents/DL/Explainable_CNN/data/CIFAR100", train=False, transform=self.transform, download=True)
         return training_data, testing_data
 
+    def data_loaders(self, dataset, type):
+        if type == "train":
+            shuffle = True
+        else:
+            shuffle = False
+
+        loader = torch.utils.data.DataLoader(dataset=dataset, batch_size=batch_size, shuffle=shuffle)
+        return loader
 
 
