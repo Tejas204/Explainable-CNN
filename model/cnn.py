@@ -15,8 +15,6 @@ class ExplainableCNN(nn.Module):
         self.norm = normalization
         self.drop_prob = drop_prob
 
-    def normalization():
-        pass
 
     def build_model():
         pass
