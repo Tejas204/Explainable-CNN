@@ -12,10 +12,11 @@ CNN_Config = dict(
 
     model_args = dict(
         input_size = 3,
-        num_classse = 10,
+        num_classes = 10,
         hidden_layers = [64, 128, 256, 128, 64],
         activation = nn.ReLU,
-        norm_layer = False,
-        drop_prob = 0.4
+        norm_layer = nn.BatchNorm2d,
+        drop_prob = 0.4,
+        max_pool = False
     )
 )
