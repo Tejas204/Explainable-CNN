@@ -5,7 +5,7 @@ import torch.nn.functional as F
 import torchvision
 import torchvision.transforms as transforms
 from torch.utils.data import Dataset, DataLoader
-from config.config import batch_size
+from config.config import CNN_Config
 
 
 
@@ -81,7 +81,7 @@ class LoadData(Dataset):
         else:
             shuffle = False
 
-        loader = torch.utils.data.DataLoader(dataset=dataset, batch_size=batch_size, shuffle=shuffle)
+        loader = torch.utils.data.DataLoader(dataset=dataset, batch_size=CNN_Config['batch_size'], shuffle=shuffle)
         return loader
 
 
