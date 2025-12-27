@@ -45,7 +45,7 @@ class ExplainableCNN(nn.Module):
             input_dims = self.hidden_layers[i]
 
         layers.append(nn.Flatten())
-        layers.append(nn.Linear(input_dims, self.num_classes))
+        layers.append(nn.Linear(input_dims*32*32, self.num_classes))
         self.layers = nn.Sequential(*layers)
 
     

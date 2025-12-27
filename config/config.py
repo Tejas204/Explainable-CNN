@@ -14,7 +14,7 @@ CNN_Config = dict(
     model_args = dict(
         input_size = 3,
         num_classes = 10,
-        hidden_layers = [64, 128, 256, 128, 64, 10],
+        hidden_layers = [64, 128, 256, 128, 64],
         activation = nn.ReLU,
         norm_layer = nn.BatchNorm2d,
         drop_prob = 0.4,
@@ -23,6 +23,6 @@ CNN_Config = dict(
 
     criterion = nn.CrossEntropyLoss(),
     learning_rate = 0.01,
-    batch_size = 20,
-    epochs = 20
+    batch_size = 4,
+    epochs = 5
 )

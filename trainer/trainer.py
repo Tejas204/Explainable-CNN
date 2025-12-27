@@ -38,6 +38,6 @@ class Trainer():
 
 
                 if (batch + 1) % 100 == 0:
-                    print(f"Epoch: {epoch+1} / {self.epochs}, step {batch+1}/{self.n_total_step}, loss = {loss.item():.4f}")
+                    print(f"Epoch: {epoch+1} / {self.epochs}, step {batch+1}/{self.n_total_steps}, loss = {loss.item():.4f}")
 
         print("\nFinished Training!")
