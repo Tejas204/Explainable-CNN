@@ -23,6 +23,6 @@ CNN_Config = dict(
 
     criterion = nn.CrossEntropyLoss(),
     learning_rate = 0.01,
-    batch_size = 4,
-    epochs = 5
+    batch_size = 10,
+    epochs = 1
 )
