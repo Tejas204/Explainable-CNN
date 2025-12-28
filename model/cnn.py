@@ -38,6 +38,8 @@ class ExplainableCNN(nn.Module):
         self.flatten = nn.Flatten()
         self.linear = nn.Linear(64*32*32, 10)
 
+        self.relu = nn.ReLU()
+
         # layers = []
 
         # input_dims = self.input_size
@@ -70,11 +72,11 @@ class ExplainableCNN(nn.Module):
     
     def forward(self, x):
         # output = self.layers(x)
-        x = F.relu(self.norm1(self.conv1(x)))
-        x = F.relu(self.norm2(self.conv2(x)))
-        x = F.relu(self.norm3(self.conv3(x)))
-        x = F.relu(self.norm4(self.conv4(x)))
-        x = F.relu(self.norm5(self.conv5(x)))
+        x = self.relu(self.norm1(self.conv1(x)))
+        x = self.relu(self.norm2(self.conv2(x)))
+        x = self.relu(self.norm3(self.conv3(x)))
+        x = self.relu(self.norm4(self.conv4(x)))
+        x = self.relu(self.norm5(self.conv5(x)))
         x = self.flatten(x)
         x = self.linear(x)
         return x
