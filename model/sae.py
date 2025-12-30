@@ -10,10 +10,11 @@ class SAE(nn.Module):
         self.activation = activation
         self.hidden_dims = hidden_dims
         self.input_dims = input_dims
+        self.build_sae()
 
     def build_sae(self):
         self.encoder = nn.Linear(self.input_dims, self.hidden_dims)
-        self.relu = nn.ReLU()
+        self.relu = self.activation()
         self.decoder = nn.Linear(self.hidden_dims, self.input_dims)
 
     def forward(self, x):
