@@ -41,3 +41,22 @@ class Trainer():
                     print(f"Epoch: {epoch+1} / {self.epochs}, step {batch+1}/{self.n_total_steps}, loss = {loss.item():.4f}")
 
         print("\nFinished Training!")
+
+    def train_sae_model(self):
+        for epoch in range(self.epochs):
+            for batch, x in enumerate(self.train_loader):
+                # Forward pass
+                output = self.model(x)
+
+                # Loss
+                loss = self.criterion(output, x)
+
+                # Backward pass
+                self.optimizer.zero_grad()
+                loss.backward()
+                self.optimizer.step()
+
+                if (batch + 1) % 100 == 0:
+                    print(f"Epoch: {epoch+1} / {self.epochs}, step {batch+1}/{self.n_total_steps}, loss = {loss.item():.4f}")
+
+        print(f"\nFinished training!")

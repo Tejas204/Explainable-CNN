@@ -6,7 +6,7 @@ import torch.nn.functional as F
 # Define hyperparameters and layers
 
 # ------------------------------------------------------------------------------------
-# Experiment 1
+# Experiment 1 - Explainable CNN
 # ------------------------------------------------------------------------------------
 CNN_Config = dict(
     name = "CNN_Experiment_1",
@@ -25,4 +25,19 @@ CNN_Config = dict(
     learning_rate = 0.01,
     batch_size = 10,
     epochs = 1
+)
+
+# ------------------------------------------------------------------------------------
+# Experiment 2 - SAE
+# ------------------------------------------------------------------------------------
+SAE_Config = dict(
+    name = "SAE_Experiment_1",
+
+    model_args = dict(
+        input_dims = 10,
+        hidden_dims = 25,
+        epochs = 2,
+        batch_size = 1,
+        learning_rate = 0.01
+    )
 )
