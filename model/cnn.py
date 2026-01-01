@@ -40,38 +40,8 @@ class ExplainableCNN(nn.Module):
 
         self.relu = nn.ReLU()
 
-        # layers = []
-
-        # input_dims = self.input_size
-        # for i in range(len(self.hidden_layers)):
-        #     # Convolution
-        #     layers.append(nn.Conv2d(input_dims, self.hidden_layers[i], 3, stride=1, padding=1))
-
-        #     # Batch Norm
-        #     if self.norm:
-        #         layers.append(self.norm(self.hidden_layers[i]))
-
-        #     # Max pooling
-        #     if self.max_pool and i == len(self.hidden_layers[i]) - 2:
-        #         layers.append(nn.MaxPool2d((2, 2), stride=2))
-            
-        #     # Activation
-        #     layers.append(self.activation())
-
-        #     # Drop probabilities
-        #     if self.drop_prob:
-        #         layers.append(nn.Dropout(self.drop_prob))
-
-        #     input_dims = self.hidden_layers[i]
-
-        # layers.append(nn.Flatten())
-        # layers.append(nn.Linear(input_dims*32*32, self.num_classes))
-        # self.layers = nn.Sequential(*layers)
-        # nn.Sequential()
-
     
     def forward(self, x):
-        # output = self.layers(x)
         x = self.relu(self.norm1(self.conv1(x)))
         x = self.relu(self.norm2(self.conv2(x)))
         x = self.relu(self.norm3(self.conv3(x)))
