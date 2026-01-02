@@ -18,6 +18,7 @@ class Hooks():
         self.module_names = module_names
         self.activations = {}
         self.hooks = []
+        self.feature_vectors = []
 
         for name, module in model.named_modules():
             if name in self.module_names:
@@ -45,3 +46,20 @@ class Hooks():
         """
         for hook in self.hooks:
             hook.remove()
+
+
+    def collect_features(self, name:str):
+        batch = self.activations[name].shape[0]
+        dims = self.activations[name].shape[1]
+        height = self.activations[name].shape[2]
+        width =self.activations[name].shape[3]
+        self.features = []
+
+        for h in range(height):
+            for w in range(width):
+                feature_array = []
+                for dim in range(dims):
+                    feature_array.append(self.activations['conv5'][0][dim][h][w])
+                self.features.append(feature_array)
+
+        self.feature_vectors.append(self.features)
