@@ -7,6 +7,18 @@ import torch.nn.functional as F
 
 class ExplainableCNN(nn.Module):
     def __init__(self, input_size, hidden_layers, num_classes, activation, normalization, max_pool, drop_prob = 0.0):
+        """
+        Initialize the ExplainableCNN model.
+
+        Args:
+            input_size: The size of the input data.
+            hidden_layers: Configuration for hidden layers.
+            num_classes: Number of output classes.
+            activation: Activation function to use.
+            normalization: Normalization technique.
+            max_pool: Max pooling configuration.
+            drop_prob (float): Dropout probability (default 0.0).
+        """
         super(ExplainableCNN, self).__init__()
         self.input_size = input_size
         self.hidden_layers = hidden_layers
@@ -20,6 +32,9 @@ class ExplainableCNN(nn.Module):
 
 
     def build_model(self):
+        """
+        Build the convolutional neural network layers.
+        """
         self.conv1 = nn.Conv2d(3, 64, 3, stride=1, padding=1)
         self.norm1 = nn.BatchNorm2d(64)
 
@@ -42,6 +57,15 @@ class ExplainableCNN(nn.Module):
 
     
     def forward(self, x):
+        """
+        Perform a forward pass through the network.
+
+        Args:
+            x: Input tensor.
+
+        Returns:
+            Output tensor after passing through the network.
+        """
         x = self.relu(self.norm1(self.conv1(x)))
         x = self.relu(self.norm2(self.conv2(x)))
         x = self.relu(self.norm3(self.conv3(x)))
