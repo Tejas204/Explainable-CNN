@@ -53,13 +53,10 @@ class Hooks():
         dims = self.activations[name].shape[1]
         height = self.activations[name].shape[2]
         width =self.activations[name].shape[3]
-        self.features = []
 
         for h in range(height):
             for w in range(width):
                 feature_array = []
                 for dim in range(dims):
                     feature_array.append(self.activations['conv5'][0][dim][h][w])
-                self.features.append(feature_array)
-
-        self.feature_vectors.append(self.features)
+                self.feature_vectors.append(feature_array)
