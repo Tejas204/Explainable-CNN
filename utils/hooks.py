@@ -49,6 +49,22 @@ class Hooks():
 
 
     def collect_features(self, name:str):
+        """
+        Collect feature vectors from the activations of a specified module.
+
+        This method extracts feature vectors from the activation map of the given module
+        by iterating over each spatial position (height and width) and collecting the
+        activation values across all feature dimensions for the first batch item.
+
+        Args:
+            name (str): The name of the module whose activations to collect features from.
+                        Note: Currently hardcoded to use 'conv5' activations.
+
+        Note:
+            This method appends feature vectors to self.feature_vectors list.
+            It only processes the first item in the batch (index 0), because there
+            is only one item per batch
+        """
         batch = self.activations[name].shape[0]
         dims = self.activations[name].shape[1]
         height = self.activations[name].shape[2]
@@ -59,4 +75,20 @@ class Hooks():
                 feature_array = []
                 for dim in range(dims):
                     feature_array.append(self.activations['conv5'][0][dim][h][w])
-                self.feature_vectors.append(feature_array)
+                self.feature_vectors.append(torch.tensor(feature_array))
+
+    def write_features(self, filepath:str):
+        """
+        Write the collected feature vectors to a file.
+
+        This method appends each feature vector in self.feature_vectors to the specified file,
+        with each vector written as a string representation followed by a newline.
+
+        Args:
+            filepath (str): The path to the file where feature vectors will be written.
+                            The file is opened in append mode ('a+').
+        """
+        with open(filepath, "a+") as file:
+            for i in range(len(self.feature_vectors)):
+                file.write(str(self.feature_vectors[i])+"\n")
+            file.close()
