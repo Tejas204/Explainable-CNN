@@ -99,8 +99,8 @@ class LoadData(Dataset):
         data_length = len(features)
 
         # Create train and test features
-        train_features = features[:math.floor(data_length*0.2)]
-        test_features = features[math.floor(data_length*0.2):]
+        train_features = features[:math.floor(data_length*0.8)]
+        test_features = features[math.floor(data_length*0.8):]
         num_train_features = len(train_features)
         num_test_features = len(test_features)
 
