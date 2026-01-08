@@ -69,8 +69,9 @@ class Trainer():
         model parameters for the specified number of epochs. Prints progress every 100 steps.
         """
         for epoch in range(self.epochs):
-            for batch, x in enumerate(self.train_loader):
+            for i, batch in enumerate(self.train_loader):
                 # Forward pass
+                x = torch.stack(self.train_loader[batch])
                 output = self.model(x)
 
                 # Loss
