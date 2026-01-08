@@ -34,10 +34,10 @@ SAE_Config = dict(
     name = "SAE_Experiment_1",
 
     model_args = dict(
-        input_dims = 10,
-        hidden_dims = 25,
-        epochs = 2,
+        input_dims = 64,
+        hidden_dims = 125,
+        epochs = 40,
         batch_size = 1,
-        learning_rate = 0.01
+        learning_rate = 0.001
     )
 )
