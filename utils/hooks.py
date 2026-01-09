@@ -39,6 +39,36 @@ class Hooks():
         def hook(module, input, output):
             self.activations[name] = output.detach()
         return hook
+    
+    def sae_get_top_k_activations(self, name:str):
+        """
+        Create a forward hook function to capture and sparsify activations using top-k selection.
+
+        This method creates a hook that modifies the output activations by keeping only the
+        top-k values and setting the rest to zero, enforcing sparsity in the activations.
+
+        Args:
+            name (str): The name of the module.
+
+        Returns:
+            function: A hook function that stores the sparsified output in self.activations.
+        """
+        def hook(module, input, output):
+            actvtn = output.detach()
+            
+            # Use pytorch top-k function
+            values, indices = torch.topk(actvtn)
+
+            # Enforce top-k sparsity
+            for i in range(len(actvtn)):
+                if i in indices:
+                    continue
+                else:
+                    actvtn[i] = 0
+
+            self.activations[name] = actvtn
+
+        return hook
         
     def remove(self):
         """

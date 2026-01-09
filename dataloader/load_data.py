@@ -36,6 +36,12 @@ class LoadData(Dataset):
         Loads data available with torchvision
     """
     def __init__(self, transform):
+        """
+        Initialize the LoadData dataset.
+
+        Args:
+            transform: The transform to apply to the data samples.
+        """
         super(LoadData, self).__init__()
         self.transform = transform
     
@@ -78,6 +84,16 @@ class LoadData(Dataset):
         return training_data, testing_data
 
     def data_loaders(self, dataset, type):
+        """
+        Create a DataLoader for the given dataset.
+
+        Args:
+            dataset: The dataset to create a loader for.
+            type (str): The type of loader ('train' or 'test'), determines if shuffling is enabled.
+
+        Returns:
+            DataLoader: A PyTorch DataLoader for the dataset.
+        """
         if type == "train":
             shuffle = True
         else:
