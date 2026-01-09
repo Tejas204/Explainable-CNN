@@ -7,6 +7,7 @@ import torchvision.transforms as transforms
 from torch.utils.data import Dataset, DataLoader
 from config.config import CNN_Config
 import math
+import random
 
 
 
@@ -85,7 +86,7 @@ class LoadData(Dataset):
         loader = torch.utils.data.DataLoader(dataset=dataset, batch_size=CNN_Config['batch_size'], shuffle=shuffle)
         return loader
     
-    def create_sae_loaders(self, features:list, batch_size:int):
+    def create_sae_loaders(self, features:list, batch_size:int, shuffle:bool):
         """Create training and testing data loaders for the SAE model.
 
         Args:
@@ -103,6 +104,10 @@ class LoadData(Dataset):
         test_features = features[math.floor(data_length*0.8):]
         num_train_features = len(train_features)
         num_test_features = len(test_features)
+
+        # Shuffle the features
+        if shuffle == True:
+            train_features = random.shuffle(train_features)
 
         # Compute number of batches
         num_train_batches = math.floor(num_train_features / batch_size)
