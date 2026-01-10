@@ -22,10 +22,31 @@ class Hooks():
 
 
     def make_forward_hook(self):
+        """
+        Register forward hooks on the specified modules to capture their activations.
+
+        This method iterates through the model's named modules and registers a forward hook
+        for each module whose name is in self.module_names. The hook captures the output
+        activations and stores them in self.activations.
+        """
         for name, module in self.model.named_modules():
             if name in self.module_names:
                 self.hooks.append(
                     module.register_forward_hook(self.get_activations(name))
+                )
+
+    def make_forward_pre_hook(self):
+        """
+        Register forward pre-hooks on the specified modules to capture and sparsify activations.
+
+        This method iterates through the model's named modules and registers a forward pre-hook
+        for each module whose name is in self.module_names. The hook captures the input
+        activations, applies top-k sparsification, and stores them in self.activations.
+        """
+        for name, module in self.model.named_modules():
+            if name in self.module_names:
+                self.hooks.append(
+                    module.register_forward_pre_hook(self.sae_get_top_k_activations(name))
                 )
     
     def get_activations(self, name:str):
@@ -51,24 +72,24 @@ class Hooks():
 
         Args:
             name (str): The name of the module.
+            k (int): The number of top activations to keep.
 
         Returns:
             function: A hook function that stores the sparsified output in self.activations.
         """
         def hook(module, input, output):
-            actvtn = output.detach()
-            
-            # Use pytorch top-k function
-            values, indices = torch.topk(actvtn, k)
+            (z, ) = input
 
-            # Enforce top-k sparsity
-            for i in range(len(actvtn)):
-                if i in indices:
-                    continue
-                else:
-                    actvtn[i] = 0
+            values, indices = torch.topk(z, k, dim=-1)
 
-            self.activations[name] = actvtn
+            mask = torch.zeros_like(z)
+            mask.scatter_(dim=-1, index=indices, value=1.0)
+
+            z_sparse = z * mask
+
+            self.activations[name] = z_sparse
+
+            return (z_sparse, )
 
         return hook
         
