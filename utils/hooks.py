@@ -34,6 +34,7 @@ class Hooks():
                 self.hooks.append(
                     module.register_forward_hook(self.get_activations(name))
                 )
+                
 
     def make_forward_pre_hook(self):
         """
@@ -127,7 +128,7 @@ class Hooks():
             for w in range(width):
                 feature_array = []
                 for dim in range(dims):
-                    feature_array.append(self.activations['conv5'][0][dim][h][w])
+                    feature_array.append(self.activations[name][0][dim][h][w])
                 self.feature_vectors.append(torch.tensor(feature_array))
 
     def write_features(self, filepath:str):
