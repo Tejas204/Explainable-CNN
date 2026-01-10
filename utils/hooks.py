@@ -20,10 +20,12 @@ class Hooks():
         self.hooks = []
         self.feature_vectors = []
 
-        for name, module in model.named_modules():
+
+    def make_forward_hook(self):
+        for name, module in self.model.named_modules():
             if name in self.module_names:
                 self.hooks.append(
-                    module.register_forward_hook(self.get_activations(name=name))
+                    module.register_forward_hook(self.get_activations(name))
                 )
     
     def get_activations(self, name:str):
@@ -40,7 +42,7 @@ class Hooks():
             self.activations[name] = output.detach()
         return hook
     
-    def sae_get_top_k_activations(self, name:str):
+    def sae_get_top_k_activations(self, name:str, k:int):
         """
         Create a forward hook function to capture and sparsify activations using top-k selection.
 
@@ -57,7 +59,7 @@ class Hooks():
             actvtn = output.detach()
             
             # Use pytorch top-k function
-            values, indices = torch.topk(actvtn)
+            values, indices = torch.topk(actvtn, k)
 
             # Enforce top-k sparsity
             for i in range(len(actvtn)):
