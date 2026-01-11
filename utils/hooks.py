@@ -6,7 +6,7 @@ import torch.nn as nn
 import torch.nn.functional as F
 
 class Hooks():
-    def __init__(self, model:nn.Module, module_names):
+    def __init__(self, model:nn.Module, module_names, k:int=None):
         """
         Initialize the Hooks class to register forward hooks on specified modules.
 
@@ -19,6 +19,7 @@ class Hooks():
         self.activations = {}
         self.hooks = []
         self.feature_vectors = []
+        self.k = k
 
 
     def make_forward_hook(self):
@@ -47,7 +48,7 @@ class Hooks():
         for name, module in self.model.named_modules():
             if name in self.module_names:
                 self.hooks.append(
-                    module.register_forward_pre_hook(self.sae_get_top_k_activations(name))
+                    module.register_forward_pre_hook(self.sae_get_top_k_activations(name=name, k=self.k))
                 )
     
     def get_activations(self, name:str):
@@ -78,7 +79,7 @@ class Hooks():
         Returns:
             function: A hook function that stores the sparsified output in self.activations.
         """
-        def hook(module, input, output):
+        def hook(module, input):
             (z, ) = input
 
             values, indices = torch.topk(z, k, dim=-1)
