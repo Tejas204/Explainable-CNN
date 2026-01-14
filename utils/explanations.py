@@ -28,11 +28,12 @@ class Explanations():
         colormap = plt.get_cmap(cmap)
         heatmap = colormap(act)[..., :3]
 
-        if image.max() > 1:
-            image = image / 255.0
+        # if image.max() > 1:
+        #     image = image / 255.0
 
         # Blend
         overlay = (1 - alpha) * image + alpha * heatmap
-        overlay = np.clip(overlay, 0, 1)
+        # overlay = image + heatmap
+        # overlay = np.clip(overlay, 0, 1)
 
         return overlay
