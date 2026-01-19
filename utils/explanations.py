@@ -32,8 +32,8 @@ class Explanations():
         #     image = image / 255.0
 
         # Blend
-        overlay = (1 - alpha) * image + alpha * heatmap
-        # overlay = image + heatmap
+        # overlay = (1 - alpha) * image + alpha * heatmap
+        overlay = image + alpha*heatmap
         # overlay = np.clip(overlay, 0, 1)
 
         return overlay

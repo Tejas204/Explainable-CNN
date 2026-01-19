@@ -5,7 +5,7 @@ import torch.nn as nn
 import torch.nn.functional as F
 
 class SAE(nn.Module):
-    def __init__(self, input_dims, activation, hidden_dims):
+    def __init__(self, device, input_dims, activation, hidden_dims):
         """
         Initialize the Sparse Autoencoder (SAE) model.
 
@@ -18,6 +18,7 @@ class SAE(nn.Module):
         self.activation = activation
         self.hidden_dims = hidden_dims
         self.input_dims = input_dims
+        self.device = device
         self.build_sae()
 
     def build_sae(self):

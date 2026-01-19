@@ -14,7 +14,7 @@ import matplotlib.pyplot as plt
 from config.config import CNN_Config
 
 class Trainer():
-    def __init__(self, criterion, optimizer, batch_size, epochs, train_loader, model, experiment):
+    def __init__(self, device, criterion, optimizer, batch_size, epochs, train_loader, model, experiment):
         """Initialize the Trainer class.
 
         Args:
@@ -34,6 +34,7 @@ class Trainer():
         self.train_loader = train_loader
         self.n_total_steps = len(self.train_loader)
         self.experiment = experiment
+        self.device = device
         print(f"Starting Experiment: {self.experiment}")
 
     def train_model(self):
