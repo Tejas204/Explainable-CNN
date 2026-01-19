@@ -42,3 +42,24 @@ class SAE(nn.Module):
         x = self.relu(self.encoder(x))
         x = self.decoder(x)
         return x
+
+class CLIPSAE(nn.Module):
+    def __init__(self, device, feature_input_dims, activation, feature_hidden_dims, clip_embeddings):
+        super(CLIPSAE, self).__init__()
+        self.activation = activation
+        self.hidden_dims = feature_hidden_dims
+        self.input_dims = feature_input_dims
+        self.device = device
+        self.clip_embeddings = clip_embeddings
+
+    def build_clipsae(self):
+        self.clip_encoder = nn.Linear(self.clip_embeddings.shape[0], self.hidden_dims)
+        self.feature_encoder = nn.Linear(self.input_dims, self.hidden_dims)
+        self.decoder = nn.Linear(self.hidden_dims, self.input_dims)
+        self.relu = self.activation()
+
+    def forward(self, feature, clip):
+        feature = self.relu(self.feature_encoder(feature))
+        clip = self.relu(self.clip_encoder(clip))
+        feature = self.decoder(feature)
+        return feature
