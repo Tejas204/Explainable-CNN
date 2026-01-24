@@ -41,3 +41,15 @@ SAE_Config = dict(
         learning_rate = 0.001
     )
 )
+
+CLIPSAE_Configdict = dict(
+    name = "SAE_Experiment_3",
+
+    model_args = dict(
+        input_dims = 64,
+        hidden_dims = 100,
+        epochs = 40,
+        batch_size = 1,
+        learning_rate = 0.001
+    )
+)
