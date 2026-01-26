@@ -35,3 +35,5 @@ Forward hooks were created for the layers 1 and 5 of the CNN. Forward hooks help
 Below is the image of the activation of the CNN at layer 1. As expected, the CNN was able to capture the outlines and textures at the lower layer.
 
 ![](images/channel-1.png)
+
+## Usage of SAE's
