@@ -57,7 +57,7 @@ class Explanations():
 
         
         colormap = plt.get_cmap(cmap)
-        heatmap = colormap(activation)[..., :3]
+        heatmap = colormap(activation)
 
         alpha = (activation * alpha_scale)[..., None]
 
