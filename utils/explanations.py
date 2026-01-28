@@ -54,14 +54,22 @@ class Explanations():
 
         if torch.is_tensor(activation):
             activation = activation.detach().cpu().numpy()
+        print(activation)
+        print(activation.shape)
+        print(image.shape)
 
         
         colormap = plt.get_cmap(cmap)
         heatmap = colormap(activation)
 
         alpha = (activation * alpha_scale)[..., None]
+        print(alpha)
+        print(heatmap)
 
         # Blend
-        overlay = image[xpos][ypos]*(1-alpha) + alpha*heatmap
+        # overlay = image[xpos][ypos]*(1-alpha) + alpha*heatmap
+        overlay = image*(1-alpha)
+        overlay[:][xpos][ypos] += alpha*heatmap[:3]
         overlay = np.clip(overlay, 0, 1)
+        return overlay
         
