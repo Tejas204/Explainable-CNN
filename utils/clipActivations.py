@@ -4,11 +4,13 @@ import torch
 import clip
 
 class Clip():
-    def __init__(self, model, concept_file, device):
+    def __init__(self, model, concept_file, device, class_list):
         self.model = model
         self.concept_file = concept_file
         self.device = device
+        self.class_list = class_list
 
+    # Modify to read concepts from json iteratively
     def collect_concepts(self):
         with open(self.concept_file, "r") as file:
             self.concepts = file.read().split("\n")
@@ -24,3 +26,6 @@ class Clip():
         text_features /= text_features.norm(dim=-1, keepdim=True)
         print(text_features.shape)
     
+    # Create file paths for the embedding files
+    def save_embeddings(self):
+        pass
