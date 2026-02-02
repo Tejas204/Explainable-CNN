@@ -3,6 +3,8 @@ import matplotlib.pyplot as plt
 import torch
 import clip
 import json
+import safetensors
+from safetensors.torch import save_file
 
 class Clip():
     def __init__(self, model, concept_file, device, class_list):
@@ -29,8 +31,13 @@ class Clip():
 
             text_features /= text_features.norm(dim=-1, keepdim=True)
             self.class_concept_embeddings[label] = text_features
-        print(self.class_concept_embeddings)
     
     # Create file paths for the embedding files
     def save_embeddings(self):
-        print()
+        for key in self.concepts.keys():
+            embedding = {}
+            for i in range(len(self.concepts[key])):
+                embedding[self.concepts[key][i]] = self.class_concept_embeddings[key][i]
+            save_file(embedding, "embeddings/"+str(key)+".safetensors")
+            print(f"Saved safetensor file for {key} successfully!")
+
