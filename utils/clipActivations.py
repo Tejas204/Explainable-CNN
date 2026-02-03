@@ -5,6 +5,7 @@ import clip
 import json
 import safetensors
 from safetensors.torch import save_file
+from safetensors import safe_open
 
 class Clip():
     def __init__(self, model, concept_file, device, class_list):
@@ -41,3 +42,5 @@ class Clip():
             save_file(embedding, "embeddings/"+str(key)+".safetensors")
             print(f"Saved safetensor file for {key} successfully!")
 
+    def create_permutations(self):
+        pass
