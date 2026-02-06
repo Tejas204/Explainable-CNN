@@ -4,8 +4,10 @@ import torch
 import clip
 import json
 import safetensors
+import math
 from safetensors.torch import save_file
 from safetensors import safe_open
+from itertools import permutations
 
 class Clip():
     def __init__(self, model, concept_file, device, class_list):
@@ -43,4 +45,7 @@ class Clip():
             print(f"Saved safetensor file for {key} successfully!")
 
     def create_permutations(self):
-        pass
+        concept_embeddings = {}
+        with safe_open('embeddings/airplane.safetensors', framework='pt', device=0) as file:
+            concepts = file.keys()
+            print(f"Total Permutations: {math.factorial(len(concepts))}")
