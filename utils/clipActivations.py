@@ -45,7 +45,17 @@ class Clip():
             print(f"Saved safetensor file for {key} successfully!")
 
     def create_permutations(self):
-        concept_embeddings = {}
+        concept_permutations = []
         with safe_open('embeddings/airplane.safetensors', framework='pt', device=0) as file:
             concepts = file.keys()
+
             print(f"Total Permutations: {math.factorial(len(concepts))}")
+            permuts = list(permutations(['air traffic tower', 'aircraft livery', 'airline logo']))
+            
+            for permut in permuts:
+                concept_embeddings = {}
+                for i in range(len(permut)):
+                    concept_embeddings[permut[i]] = file.get_tensor(permut[i])
+                concept_permutations.append(concept_embeddings)
+
+            print(concept_permutations)
