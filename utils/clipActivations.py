@@ -5,6 +5,8 @@ import clip
 import json
 import safetensors
 import math
+import random
+import os
 from safetensors.torch import save_file
 from safetensors import safe_open
 from itertools import permutations
@@ -44,18 +46,27 @@ class Clip():
             save_file(embedding, "embeddings/"+str(key)+".safetensors")
             print(f"Saved safetensor file for {key} successfully!")
 
-    def create_permutations(self):
-        concept_permutations = []
-        with safe_open('embeddings/airplane.safetensors', framework='pt', device=0) as file:
-            concepts = file.keys()
+    # Create permutations for training
+    def create_permutations(self, filename, n_permutations):
+        print(f"Generating {n_permutations} permutations for {filename}")
+        concept_embeddings = {}
+        with safe_open(f'embeddings/{filename}.safetensors', framework='pt', device=0) as file:
+            for k in file.keys():
+                concept_embeddings[k] = file.get_tensor(k)
+        
+        
+        concept_keys = list(concept_embeddings.keys())
 
-            print(f"Total Permutations: {math.factorial(len(concepts))}")
-            permuts = list(permutations(['air traffic tower', 'aircraft livery', 'airline logo']))
-            
-            for permut in permuts:
-                concept_embeddings = {}
-                for i in range(len(permut)):
-                    concept_embeddings[permut[i]] = file.get_tensor(permut[i])
-                concept_permutations.append(concept_embeddings)
+        concept_permutations = {}
+        for i in range(n_permutations):
+            concept_permutations[i] = random.sample(concept_keys, len(concept_keys))
 
-            print(concept_permutations)
+        # concept_embedding_permutations = {}
+        # for i in range(len(concept_permutations)):
+        #     for j in range(len(concept_permutations[i])):
+        #         concept_embedding_permutations[f"{i}_{concept_permutations[i][j]}"] = concept_embeddings[concept_permutations[i][j]]
+        
+        os.makedirs("permutations", exist_ok=True)
+        with open(f'permutations/{filename}.json', 'w') as f:
+            json.dump(concept_permutations, f, indent=4)
+        print(f"Saved json file for permutations of {filename} successfully!")
