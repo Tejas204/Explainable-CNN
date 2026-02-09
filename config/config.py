@@ -50,7 +50,7 @@ CLIPSAE_Configdict = dict(
 
     model_args = dict(
         input_dims = 64,
-        hidden_dims = 100,
+        hidden_dims = 80,
         epochs = 40,
         batch_size = 1,
         learning_rate = 0.001
