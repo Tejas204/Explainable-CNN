@@ -37,3 +37,5 @@ Below is the image of the activation of the CNN at layer 1. As expected, the CNN
 ![](images/channel-1.png)
 
 ## Usage of SAE's
+
+![](images/Probing-arch-diagram-dark.drawio.png)
